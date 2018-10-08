@@ -6,6 +6,9 @@ use rand::Rng;
 use std::collections::HashMap;
 
 fn main() {
+
+
+    // These items below cover chapters 1 - 4
     twelve_days_of_christmas();
 
     guess_number();
@@ -70,58 +73,7 @@ fn twelve_days_of_christmas() {
     On the first day of Christmas, my true love sent to me
     A partridge in a pear tree.
 
-    On the second day of Christmas, my true love sent to me
-    Two turtle doves
-    and a partridge in a pear tree.
-
-    On the third day of Christmas, my true love sent to me
-    Three French hens, two turtle doves
-    And a partridge in a pear tree.
-
-    On the fourth day of Christmas, my true love sent to me
-    Four calling birds, three French hens, two turtle doves
-    And a partridge in a pear tree.
-
-    On the fifth day of Christmas, my true love sent to me
-    Five golden rings.
-    Four calling birds, three French hens, two turtle doves
-    And a partridge in a pear tree.
-
-    On the sixth day of Christmas, my true love gave to me
-    Six geese a-laying,
-    Five golden rings.
-    Four calling birds, three French hens, two turtle doves
-    And a partridge in a pear tree.
-
-    On the seventh day of Christmas, my true love gave to me
-    Seven swans a-swimming, six geese a-laying,
-    Five golden rings.
-    Four calling birds, three French hens, two turtle doves
-    And a partridge in a pear tree.
-
-    On the eighth day of Christmas, my true love gave to me
-    Eight maids a-milking, seven swans a-swimming, six geese a-laying,
-    Five golden rings.
-    Four calling birds, three French hens, two turtle doves
-    And a partridge in a pear tree.
-
-    On the ninth day of Christmas, my true love gave to me
-    Nine ladies dancing, eight maids a-milking, seven swans a-swimming, six geese a-laying,
-    Five golden rings.
-    Four calling birds, three French hens, two turtle doves
-    And a partridge in a pear tree.
-
-    On the tenth day of Christmas, my true love gave to me
-    Ten lords a-leaping, nine ladies dancing, eight maids a-milking, seven swans a-swi'mmi'ng, six geese a-laying,
-    Five golden rings.
-    Fou'r calling birds, three French hens, two turtle doves
-    And a partridge in a pear tree.
-
-    On the eleventh day of Christmas, my true love gave to me
-    Eleven pipers piping, ten lords a-leaping, nine ladies dancing, eight maids a-milking, seven swans a-swimming,
-    Six geese a-laying,
-    Five golden rings.
-    Four calling birds, three French hens, two turtle doves And a partridge in a pear tree.
+    ...
 
     On the twelfth day of Christmas, my true love gave to me
     Twelve drummers drumming, eleven pipers piping, ten lords a-leaping, nine ladies dancing, eight maids a-milking, seven swans a-swimming, six geese a-laying,
@@ -136,23 +88,16 @@ fn twelve_days_of_christmas() {
                            "six geese a-laying", "Five golden rings", "Four calling birds",
                            "three French hens", "two turtle doves", "a partridge in a pear tree"];
 
-    let mut counter = 1;
-    for day in days.iter() {
+    for (counter, day) in days.iter().enumerate() {
         println!("On the {} day of Christmas, my true love game to me", day);
 
-        for gift in gifts[(gifts.len() - counter..gifts.len() - 1)].iter() {
+        let max = gifts.len() - 1;
+        for gift in gifts[(max - counter..max)].iter() {
             println!("\t{}", gift);
         }
 
-        if counter == 1 {
-            println!("\t{}.", gifts[gifts.len() - 1]);
-        }
-        else {
-            println!("\tAnd {}.", gifts[gifts.len() - 1]);
-        }
-        println!("\n");
-
-        counter += 1;
+        let prefix = if counter != 0 {"And "} else {""};
+        println!("\t{}{}.\n", prefix, gifts[max]);
     }
 
 }
