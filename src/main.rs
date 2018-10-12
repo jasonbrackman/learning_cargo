@@ -4,6 +4,8 @@ use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
 use std::collections::HashMap;
+mod fib;
+use fib::fib;
 
 fn main() {
 
@@ -18,25 +20,13 @@ fn main() {
 
 
     // let hmap: HashMap<u64, u64> = HashMap::new();
-    let mut hmap: HashMap<u64, u64> = [(0, 0), (1, 1)].into_iter().cloned().collect();
+    let mut hmap: HashMap<u64, u64> = HashMap::new();
 
-    for x in 0..80 {
-        println!("RESULT [{}]: {}", x, fib(x, &mut hmap))
+    for x in 0..84 {
+        println!("RESULT [{}]: {}", x, fib(x, &mut hmap));
     }
 }
 
-
-fn fib(n: u64, map: &mut HashMap<u64, u64>) -> u64 {
-    // hoping to early exit here...
-    if let Some(value) = map.get(&n) {
-        return *value
-    }
-
-    let total = fib(n - 2, map) + fib(n - 1, map);
-    map.insert(n, total);
-    return total
-
-}
 
 fn guess_number() -> () {
     println!("Guess the number:");
@@ -76,9 +66,9 @@ fn twelve_days_of_christmas() {
     ...
 
     On the twelfth day of Christmas, my true love gave to me
-    Twelve drummers drumming, eleven pipers piping, ten lords a-leaping, nine ladies dancing, eight maids a-milking, seven swans a-swimming, six geese a-laying,
-    Five golden rings.
-    Four calling birds, three French hens, two turtle doves
+    Twelve drummers drumming, eleven pipers piping, ten lords a-leaping, nine ladies dancing,
+    eight maids a-milking, seven swans a-swimming, six geese a-laying,
+    five golden rings, four calling birds, three French hens, two turtle doves
     And a partridge in a pear tree.
     */
     let days = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh",
