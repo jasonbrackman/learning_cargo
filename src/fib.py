@@ -1,5 +1,6 @@
 import functools
 
+
 @functools.lru_cache()
 def fib(n):
     if n < 2:
