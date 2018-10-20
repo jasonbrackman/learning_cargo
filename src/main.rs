@@ -23,10 +23,19 @@ impl Rectangle {
     }
 }
 
+enum Direction {
+    Up,
+    Down,
+    Right,
+    Left
+}
+
 fn main() {
 
+    let _player_direction:Direction = Direction::Up;
 
-    // These items below cover chapters 1 - 4
+
+    // These items below cover chapters 1 - 4ƒ
     twelve_days_of_christmas();
 
     guess_number();
