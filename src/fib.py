@@ -9,5 +9,5 @@ def fib(n):
         return fib(n-2) + fib(n-1)
 
 
-for x in range(0, 84):
+for x in range(0, 95):
     print("result [{}]: {}".format(x, fib(x)))

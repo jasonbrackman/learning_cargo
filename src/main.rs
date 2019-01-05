@@ -1,16 +1,35 @@
 extern crate rand;
 
-use std::io;
-use std::cmp::Ordering;
 use rand::Rng;
+use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::io;
+
 mod fib;
-use fib::fib;
+
+
+fn quicksort(mut items: Vec<i32>) -> Vec<i32> {
+    // base case
+    if items.len() < 2 {
+        return items;
+    }
+
+    // recursive case
+    let num = rand::thread_rng().gen_range(0, items.len());
+    let pivot = items.remove(num);
+    let (less,more) = items.into_iter().partition(|&x| x < pivot);
+
+    let mut temp = Vec::new();
+    temp.extend(quicksort(less));
+    temp.extend(vec![pivot]);
+    temp.extend(quicksort(more));
+    return temp;
+}
 
 #[derive(Debug)]
 struct Rectangle {
-    width:u32,
-    height:u32,
+    width: u32,
+    height: u32,
 }
 
 impl Rectangle {
@@ -27,54 +46,69 @@ enum Direction {
     Up,
     Down,
     Right,
-    Left
+    Left,
 }
 
 fn main() {
+    let items = vec![10, 7, 15, 70, 50, 500, 100, 0, 6, 2, 11, 3, 4, 40, 5];
+    println!("{:?}", quicksort(items));
+    // fib::fib(10);
+    let _player_direction: Direction = Direction::Up;
 
-    let _player_direction:Direction = Direction::Up;
-
-
-    // These items below cover chapters 1 - 4ƒ
+    // These items below cover chapters 1 - 4
     twelve_days_of_christmas();
 
     guess_number();
 
     let number = -50.0;
-    println!("{} Degrees C is in F: {}", number, convert_celcius_to_fahrenheit(number));
+    println!(
+        "{} Degrees C is in F: {}",
+        number,
+        convert_celcius_to_fahrenheit(number)
+    );
 
-
-    // let hmap: HashMap<u64, u64> = HashMap::new();
     let mut hmap: HashMap<u64, u64> = HashMap::new();
 
-    for x in 0..84 {
-        println!("RESULT [{}]: {}", x, fib(x, &mut hmap));
+    for x in 0..184 {
+        println!("RESULT [{}]: {}", x, fib::fib(x, &mut hmap));
     }
 
     // From Chapter 5
-    let rect = Rectangle{ width:50, height:30 };
+    let rect = Rectangle {
+        width: 50,
+        height: 30,
+    };
     println!("Area of a the {:?} = {}", rect, rect.area());
 
-    let rect1 = Rectangle { width: 30, height: 50 };
-    let rect2 = Rectangle { width: 10, height: 40 };
-    let rect3 = Rectangle { width: 60, height: 45 };
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    let rect2 = Rectangle {
+        width: 10,
+        height: 40,
+    };
+    let rect3 = Rectangle {
+        width: 60,
+        height: 45,
+    };
 
     println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
     println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
 }
 
-
-fn guess_number() -> () {
+fn guess_number() {
     println!("Guess the number:");
     let secret_number = rand::thread_rng().gen_range(1, 2);
     loop {
         let mut guess = String::new();
         println!("Please enter your guess:");
 
-        io::stdin().read_line(&mut guess)
+        io::stdin()
+            .read_line(&mut guess)
             .expect("Failed to read line.");
 
-        let guess: u32 = match guess.trim().parse() {
+        let guess: i32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
@@ -107,12 +141,24 @@ fn twelve_days_of_christmas() {
     five golden rings, four calling birds, three French hens, two turtle doves
     And a partridge in a pear tree.
     */
-    let days = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh",
-                          "eighth", "ninth", "tenth", "eleventh", "twelfth"];
-    let gifts = ["Twelve drummers drumming", "eleven pipers piping", "ten lords a-leaping",
-                           "nine ladies dancing", "eight maids a-milking", "seven swans a-swimming",
-                           "six geese a-laying", "Five golden rings", "Four calling birds",
-                           "three French hens", "two turtle doves", "a partridge in a pear tree"];
+    let days = [
+        "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth",
+        "tenth", "eleventh", "twelfth",
+    ];
+    let gifts = [
+        "Twelve drummers drumming",
+        "eleven pipers piping",
+        "ten lords a-leaping",
+        "nine ladies dancing",
+        "eight maids a-milking",
+        "seven swans a-swimming",
+        "six geese a-laying",
+        "Five golden rings",
+        "Four calling birds",
+        "three French hens",
+        "two turtle doves",
+        "a partridge in a pear tree",
+    ];
 
     for (counter, day) in days.iter().enumerate() {
         println!("On the {} day of Christmas, my true love game to me", day);
@@ -122,8 +168,7 @@ fn twelve_days_of_christmas() {
             println!("\t{}", gift);
         }
 
-        let prefix = if counter != 0 {"And "} else {""};
+        let prefix = if counter != 0 { "And " } else { "" };
         println!("\t{}{}.\n", prefix, gifts[max]);
     }
-
 }
